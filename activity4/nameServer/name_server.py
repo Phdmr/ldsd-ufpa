@@ -3,6 +3,7 @@ import socket
 
 def start_name_server():
     # Mapeamento de nome de serviço para IP e porta
+    # Mude o IP para o IP do servidor
     services = {
         "tcp_service": ("192.168.100.6", 9090),
         "udp_service": ("192.168.100.6", 9091),

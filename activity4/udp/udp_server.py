@@ -1,18 +1,18 @@
 # servidor_udp.py
-import socket
+"""import socket
 import threading
 
 
 def handle_udp_client(data, addr, server_socket):
-    """Função para tratar cada mensagem de cliente UDP em uma thread separada"""
+    #Função para tratar cada mensagem de cliente UDP em uma thread separada
     print(f"Recebido de {addr}: {data.decode()}")
     server_socket.sendto(b"Mensagem recebida.", addr)
 
 
 def udp_server():
-    """Função principal do servidor UDP que aceita múltiplos clientes"""
+    #Função principal do servidor UDP que aceita múltiplos clientes
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_socket.bind(("localhost", 8081))
+    server_socket.bind(('0.0.0.0', 8081))
     print("Servidor UDP rodando na porta 8081...")
 
     while True:
@@ -26,3 +26,21 @@ def udp_server():
 
 if __name__ == "__main__":
     udp_server()
+"""
+
+import socket
+
+
+def start_udp_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_socket.bind(("0.0.0.0", 9091))
+    print("Servidor UDP rodando na porta 9091...")
+
+    while True:
+        data, addr = server_socket.recvfrom(1024)
+        print(f"Recebido de {addr}: {data.decode('utf-8')}")
+        server_socket.sendto(b"Recebido", addr)
+
+
+if __name__ == "__main__":
+    start_udp_server()
