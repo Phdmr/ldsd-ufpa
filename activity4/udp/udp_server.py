@@ -39,7 +39,9 @@ def start_udp_server():
     while True:
         data, addr = server_socket.recvfrom(1024)
         print(f"Recebido de {addr}: {data.decode('utf-8')}")
-        server_socket.sendto(b"Recebido", addr)
+
+        # Enviar resposta de volta para o cliente
+        server_socket.sendto(b"Mensagem recebida pelo servidor UDP", addr)
 
 
 if __name__ == "__main__":
