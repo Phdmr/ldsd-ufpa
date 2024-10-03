@@ -28,6 +28,7 @@ def tcp_client():
         )
         if message.lower() == "sair":
             print("Encerrando o cliente.")
+            client_socket.send(message.encode())
             break  # Encerra o loop se o usuário digitar 'sair'
 
         client_socket.send(message.encode())

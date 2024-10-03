@@ -13,16 +13,17 @@ def handle_client(client_socket, addr):
             break
 
         message = data.decode("utf-8")
-        print(f"Recebido de {addr}: {message}")
-
-        # Enviar resposta ao cliente
-        response_message = "Recebido"
-        client_socket.send(response_message.encode("utf-8"))
 
         # Verificar se o cliente deseja encerrar a conexão
         if message.lower() == "sair":
             print(f"Cliente {addr} pediu para sair.")
             break
+
+        print(f"Recebido de {addr}: {message}")
+
+        # Enviar resposta ao cliente
+        response_message = "Recebido"
+        client_socket.send(response_message.encode("utf-8"))
 
     client_socket.close()
     print(f"Conexão com {addr} encerrada.")
