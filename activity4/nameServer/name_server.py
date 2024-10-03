@@ -1,29 +1,33 @@
-# Servidor de nomes simples
-
 import socket
 
-# Dicionário para armazenar nomes e endereços de serviços
-SERVICES = {"tcp_service": ("localhost", 8080), "udp_service": ("localhost", 8081)}
 
+def start_name_server():
+    # Mapeamento de nome de serviço para IP e porta
+    services = {
+        "tcp_service": ("192.168.100.6", 9090),
+        "udp_service": ("192.168.100.6", 9091),
+    }
 
-def name_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(("localhost", 9090))
+    server_socket.bind(("0.0.0.0", 5050))  # Porta do servidor de nomes
     server_socket.listen(5)
-    print("Servidor de Nomes rodando na porta 9090...")
+    print("Servidor de Nomes rodando na porta 5050...")
 
     while True:
         client_socket, addr = server_socket.accept()
-        print(f"Solicitação recebida de: {addr}")
+        print(f"Conexão recebida de {addr}")
 
-        service_name = client_socket.recv(1024).decode()
-        if service_name in SERVICES:
-            service_address = f"{SERVICES[service_name][0]}:{SERVICES[service_name][1]}"
-            client_socket.send(service_address.encode())
+        # Receber o nome do serviço
+        service_name = client_socket.recv(1024).decode("utf-8")
+
+        if service_name in services:
+            ip, port = services[service_name]
+            client_socket.send(f"{ip}:{port}".encode("utf-8"))
         else:
             client_socket.send(b"Servico nao encontrado.")
+
         client_socket.close()
 
 
 if __name__ == "__main__":
-    name_server()
+    start_name_server()

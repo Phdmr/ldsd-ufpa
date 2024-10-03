@@ -1,30 +1,26 @@
-# servidor_tcp.py
 import socket
 import threading
 
 
 def handle_client(client_socket, addr):
-    """Função para tratar cada cliente em uma thread separada"""
-    print(f"Conexão estabelecida com: {addr}")
+    print(f"Cliente conectado: {addr}")
+    client_socket.send(b"Bem-vindo ao servidor TCP!")
+
     while True:
-        try:
-            data = client_socket.recv(1024)
-            if not data:
-                break
-            print(f"Recebido de {addr}: {data.decode()}")
-            client_socket.send(b"Mensagem recebida.")
-        except:
+        data = client_socket.recv(1024)
+        if not data:
             break
+        print(f"Recebido de {addr}: {data.decode('utf-8')}")
+        client_socket.send(b"Recebido")
+
     client_socket.close()
-    print(f"Conexão fechada com: {addr}")
 
 
-def tcp_server():
-    """Função principal do servidor TCP que aceita múltiplos clientes"""
+def start_tcp_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(("localhost", 8080))
-    server_socket.listen(5)  # Permite até 5 conexões em espera
-    print("Servidor TCP rodando na porta 8080...")
+    server_socket.bind(("0.0.0.0", 9090))
+    server_socket.listen(5)
+    print("Servidor TCP rodando na porta 9090...")
 
     while True:
         client_socket, addr = server_socket.accept()
@@ -35,4 +31,4 @@ def tcp_server():
 
 
 if __name__ == "__main__":
-    tcp_server()
+    start_tcp_server()

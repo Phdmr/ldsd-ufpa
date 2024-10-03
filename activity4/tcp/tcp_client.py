@@ -1,30 +1,32 @@
-# cliente_tcp.py
 import socket
 
 
 def get_service_address(service_name):
     name_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    name_server_socket.connect(("localhost", 9090))
-    name_server_socket.send(service_name.encode())
+    name_server_socket.connect(
+        ("192.168.100.6", 5050)
+    )  # IP e porta do servidor de nomes
+    name_server_socket.send(service_name.encode("utf-8"))
 
-    address = name_server_socket.recv(1024).decode()
+    response = name_server_socket.recv(1024).decode("utf-8")
     name_server_socket.close()
-    return address
+
+    ip, port = response.split(":")
+    return ip, int(port)
 
 
-def tcp_client():
-    service_address = get_service_address("tcp_service")
-    ip, port = service_address.split(":")
-
+def start_tcp_client():
+    ip, port = get_service_address("tcp_service")
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((ip, int(port)))
+    client_socket.connect((ip, port))
+    print(f"Conectado ao servidor TCP em {ip}:{port}")
 
-    while True:
-        message = input("Digite a mensagem para o servidor TCP: ")
-        client_socket.send(message.encode())
-        response = client_socket.recv(1024).decode()
-        print(f"Resposta do servidor TCP: {response}")
+    client_socket.send(b"Oi servidor TCP!")
+    response = client_socket.recv(1024)
+    print(f"Resposta do servidor: {response.decode('utf-8')}")
+
+    client_socket.close()
 
 
 if __name__ == "__main__":
-    tcp_client()
+    start_tcp_client()
