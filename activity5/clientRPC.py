@@ -1,6 +1,6 @@
 import xmlrpc.client
 
-# Solicita o IP do servidor
+# Digitar o IP do servidor
 ip_servidor = input("Digite o IP do servidor (deixe vazio para localhost): ")
 if not ip_servidor:
     ip_servidor = "localhost"
@@ -11,7 +11,7 @@ try:
     # Cria o cliente que se conecta ao servidor RPC
     proxy = xmlrpc.client.ServerProxy(f"http://{ip_servidor}:8000")
 
-    # Teste de conexão com a função ping
+    # Teste de conexão
     resposta = proxy.ping()
     if resposta == "Pong!":
         print(f"Conexão estabelecida com o servidor {ip_servidor}!")
@@ -19,10 +19,10 @@ try:
         raise Exception("Resposta inesperada do servidor.")
 except Exception as e:
     print(f"Erro ao conectar ao servidor: {e}")
-    exit(1)  # Encerra o programa se a conexão falhar
+    exit(1)  # Encerra o programa caso a conexão falhe
 
 
-# Função para exibir o menu de operações
+# Exibir as opções
 def menu():
     print("\nEscolha a operação:")
     print("1. Soma")
@@ -33,14 +33,14 @@ def menu():
     return int(input("Digite o número da operação desejada: "))
 
 
-# Função para coletar os dois números do usuário
+# Coletar os dois números para realizar as operações
 def get_numbers():
     x = float(input("Digite o primeiro número: "))
     y = float(input("Digite o segundo número: "))
     return x, y
 
 
-# Loop principal do cliente
+# Loop do cliente
 while True:
     try:
         escolha = menu()
@@ -58,7 +58,7 @@ while True:
                 print(f"Resultado: {x} / {y} = {proxy.divide(x, y)}")
 
         elif escolha == 5:
-            # Encerrar a conexão com o servidor
+            # Encerra a conexão com o servidor
             proxy.disconnect(ip_servidor)
             print("Conexão encerrada. Saindo do programa.")
             break
