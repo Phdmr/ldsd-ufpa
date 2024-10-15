@@ -6,8 +6,20 @@ if not ip_servidor:
     ip_servidor = "localhost"
     print("Usando localhost como servidor.")
 
-# Cria o cliente que se conecta ao servidor RPC
-proxy = xmlrpc.client.ServerProxy(f"http://{ip_servidor}:8000/")
+# Tenta se conectar ao servidor
+try:
+    # Cria o cliente que se conecta ao servidor RPC
+    proxy = xmlrpc.client.ServerProxy(f"http://{ip_servidor}:8000")
+
+    # Teste de conexão com a função ping
+    resposta = proxy.ping()
+    if resposta == "Pong!":
+        print(f"Conexão estabelecida com o servidor {ip_servidor}!")
+    else:
+        raise Exception("Resposta inesperada do servidor.")
+except Exception as e:
+    print(f"Erro ao conectar ao servidor: {e}")
+    exit(1)  # Encerra o programa se a conexão falhar
 
 
 # Função para exibir o menu de operações
