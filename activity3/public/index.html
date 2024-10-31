@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprodução de Mídia e Operações Matemáticas - Servidor Local</title>
+</head>
+<body>
+    <h1>Servidor Local - Mídia e Funções Matemáticas</h1>
+
+    <!-- Imagem do servidor -->
+    <h2>Imagem</h2>
+    <img src="image.jpg" alt="Imagem do servidor" style="max-width: 100%; height: auto;">
+
+    <!-- Vídeo do servidor -->
+    <h2>Vídeo</h2>
+    <video width="640" height="360" controls>
+        <source src="TheSkeletonDance.mp4" type="video/mp4">
+        Seu navegador não suporta a reprodução de vídeo.
+    </video>
+
+    <!-- Resolução de Equação do 2º Grau -->
+    <h2>Resolver Equação do 2º Grau</h2>
+    <p>Insira os coeficientes a, b e c para resolver a equação ax² + bx + c = 0:</p>
+    <input type="number" id="a" placeholder="Coeficiente a">
+    <input type="number" id="b" placeholder="Coeficiente b">
+    <input type="number" id="c" placeholder="Coeficiente c">
+    <button onclick="resolverEquacao()">Calcular</button>
+    <p id="resultadoEquacao"></p>
+
+    <!-- Ordenação de Números Aleatórios -->
+    <h2>Ordenar Números Aleatórios</h2>
+    <p>Digite a quantidade de números aleatórios para gerar e ordenar:</p>
+    <input type="number" id="quantidadeNumeros" placeholder="Quantidade de números">
+    <button onclick="ordenarNumeros()">Ordenar</button>
+    <p id="resultadoOrdenacao"></p>
+
+    <!-- Importação do Script JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
