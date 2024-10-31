@@ -7,12 +7,17 @@
 #define NUM_CHILDREN 5
 #define RANGE 100
 
-void write_to_screen(int start, int end) {
+void write_to_file_and_screen(int start, int end, FILE *file, int process_num) {
+    // Indica o número do processo e o intervalo no arquivo
+    fprintf(file, "Processo %d (PID: %d) imprimindo range %d-%d: ", process_num, getpid(), start, end);
+    printf("Processo %d (PID: %d) imprimindo range %d-%d: ", process_num, getpid(), start, end);
+
     for (int i = start; i <= end; i++) {
-        printf("%d ", i);  // Escreve na tela
         fprintf(file, "%d ", i);  // Escreve no arquivo
+        printf("%d ", i);         // Escreve na tela
     }
-    printf("\n");
+    fprintf(file, "\n");  // Nova linha no arquivo
+    printf("\n");         // Nova linha na tela
 }
 
 int main() {
@@ -20,7 +25,7 @@ int main() {
     int start, end;
     FILE *file;
 
-    Abre o arquivo para escrita
+    // Abre o arquivo para escrita
     file = fopen("output.txt", "w");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo");
@@ -41,7 +46,7 @@ int main() {
         } else if (pid == 0) {
             // Código do processo filho
             printf("Processo filho %d iniciado, PID: %d\n", i + 1, getpid());
-            write_to_screen(start, end);
+            write_to_file_and_screen(start, end, file, i + 1);
             printf("Processo filho %d finalizado, PID: %d\n", i + 1, getpid());
             fclose(file);
             exit(0);
@@ -54,11 +59,8 @@ int main() {
     }
 
     printf("Todos os processos filhos foram finalizados.\n");
-    
+    fclose(file);
     printf("Pressione qualquer tecla para sair...\n");
     getchar();  // Espera o usuário pressionar Enter
-    return 0;
-
-    fclose(file);
     return 0;
 }

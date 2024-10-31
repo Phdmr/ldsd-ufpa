@@ -1,0 +1,33 @@
+Ativação e Teste no Mesmo Computador
+
+    Inicie o Servidor de Nomes (name_server.py):
+        Execute name_server.py no terminal:
+	python name_server.py
+
+Ele iniciará na porta 5050 e estará pronto para fornecer os endereços IP e portas dos serviços de TCP e UDP.
+
+Inicie o Servidor TCP (tcp_server.py):
+
+    Em outro terminal, execute:
+	python tcp_server.py
+Ele iniciará na porta 9090 e aguardará conexões de clientes.
+
+Inicie o Servidor UDP (udp_server.py):
+
+    Em outro terminal, execute:
+	python udp_server.py
+Ele estará escutando na porta 9091 e pronto para receber mensagens dos clientes.
+
+Inicie o Cliente TCP (tcp_client.py):
+
+    Em um novo terminal, execute:
+	python tcp_client.py
+O cliente solicitará uma mensagem para enviar ao servidor TCP. Digite a mensagem e pressione Enter. O servidor TCP responderá com a confirmação "Recebido".
+Digite "sair" para encerrar
+
+Inicie o Cliente UDP (udp_client.py):
+
+    Em outro terminal, execute:
+	python udp_client.py
+O cliente solicitará uma mensagem para enviar ao servidor UDP. Digite a mensagem e pressione Enter. O servidor UDP responderá, e o cliente exibirá a resposta.
+Para encerrar, digite "sair".
